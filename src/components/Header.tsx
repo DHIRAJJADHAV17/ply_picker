@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import MainNav from "./MainNav";
 
 import AuthNav from "./AuthNav";
-import Link from "next/link";
+
 import Image from "next/image";
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     setIsLogin(!!accessToken);
-  }, []);
+  }, [islogin]);
 
   return (
     <div className="border-b-2 border-b-primary py-4 ">

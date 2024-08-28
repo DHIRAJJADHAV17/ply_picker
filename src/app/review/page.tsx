@@ -19,10 +19,12 @@ import {
 } from "../api/MyReviewApi";
 import { Button } from "@/components/ui/button";
 import withAuth from "@/components/hoc/withauth";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [review, setreview] = useState<any>([]);
   const [isadmin, setadmin] = useState<boolean>(false);
+  const router = useRouter();
   useEffect(() => {
     const fetchReview = async () => {
       try {
@@ -43,17 +45,23 @@ const page = () => {
 
     fetchReview();
   }, []);
-  const handleAccept = (id: string) => {
+  const handleAccept = async (id: string) => {
     try {
-      const res = updateAccept(id);
+      const res = await updateAccept(id);
+      if (res) {
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleReject = (id: string) => {
+  const handleReject = async (id: string) => {
     try {
-      const res = updateReview(id);
+      const res = await updateReview(id);
+      if (res) {
+        router.push("/dashboard");
+      }
     } catch (error) {
       console.log(error);
     }

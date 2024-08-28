@@ -21,6 +21,7 @@ import ReactCrop, { Crop, PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { getProductDetail, updateProduct } from "@/app/api/MyProductApi";
 import withAuth from "@/components/hoc/withauth";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -43,7 +44,9 @@ type Props = {
     id: String;
   };
 };
+
 const Page = ({ params }: Props) => {
+  const [isadmin, setadmin] = useState(false);
   const form = useForm<RestaurantFormData>({
     resolver: zodResolver(formSchema),
   });
@@ -56,7 +59,7 @@ const Page = ({ params }: Props) => {
   const [croppedImageUrl, setCroppedImageUrl] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
-
+  const route = useRouter();
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
@@ -69,6 +72,8 @@ const Page = ({ params }: Props) => {
       }
     };
 
+    const getadmin = localStorage.getItem("isadmin");
+    setadmin(getadmin === "true");
     fetchRestaurant();
   }, [form, params.id]);
 
@@ -84,6 +89,9 @@ const Page = ({ params }: Props) => {
         formData.append("imageFile", data.imageFile);
       }
       const result = await updateProduct(formData, params.id.toString());
+      if (result) {
+        route.push("/dashboard");
+      }
     } catch (error) {
       console.error("Error creating product:", error);
     }
@@ -247,9 +255,15 @@ const Page = ({ params }: Props) => {
               <canvas ref={previewCanvasRef} style={{ display: "none" }} />
             </div>
           </div>
-          <Button className="text-white" type="submit">
-            Submit for review
-          </Button>
+          {isadmin ? (
+            <Button className="text-white" type="submit">
+              Update the Product
+            </Button>
+          ) : (
+            <Button className="text-white" type="submit">
+              Submit for review
+            </Button>
+          )}
         </form>
       </Form>
     </>
