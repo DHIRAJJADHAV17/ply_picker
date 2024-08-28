@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import withAuth from "@/components/hoc/withauth";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [review, setreview] = useState<any>([]);
   const [isadmin, setadmin] = useState<boolean>(false);
   const router = useRouter();
@@ -124,4 +124,4 @@ const page = () => {
   );
 };
 
-export default withAuth(page);
+export default withAuth(Page);

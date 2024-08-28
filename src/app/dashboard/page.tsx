@@ -11,7 +11,6 @@ const Page = () => {
     const fetchProductData = async () => {
       try {
         const res = await getAllProduct();
-
         setProductData(res);
       } catch (error) {
         console.error("Error fetching restaurant data:", error);
