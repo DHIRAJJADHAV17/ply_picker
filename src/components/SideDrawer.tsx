@@ -10,7 +10,6 @@ import {
 } from "./ui/sheet";
 import { Button } from "./ui/button";
 import { Plus, Settings } from "lucide-react";
-import { Call } from "./../../../backend/node_modules/@firebase/auth/dist/browser-cjs/test/helpers/mock_fetch.d";
 import Image from "next/image";
 import Link from "next/link";
 
